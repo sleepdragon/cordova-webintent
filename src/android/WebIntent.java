@@ -179,7 +179,7 @@ public class WebIntent extends CordovaPlugin {
         Intent i = (uri != null ? new Intent(action, uri) : new Intent(action));
 
         if (packageName != null && className != null ) {
-            i.setClassName(packageName, classname);
+            i.setClassName(packageName, className);
         }
         
         if (type != null && uri != null) {
