@@ -55,7 +55,8 @@ public class WebIntent extends CordovaPlugin {
 					String type = obj.has("type") ? obj.getString("type") : null;
 					Uri uri = obj.has("url") ? Uri.parse(obj.getString("url")) : null;
 					JSONObject extras = obj.has("extras") ? obj.getJSONObject("extras") : null;
-                    String classname = obj.has("classname") ? obj.getString("classname") : null;
+                    String packageName = obj.has("packageName") ? obj.getString("packageName") : null;
+                    String className = obj.has("className") ? obj.getString("className") : null;
 					Map<String, String> extrasMap = new HashMap<String, String>();
 
 					// Populate the extras if any exist
@@ -67,7 +68,7 @@ public class WebIntent extends CordovaPlugin {
 							extrasMap.put(key, value);
 						}
 					}
-					startActivity(obj.getString("action"), uri, type, classname, extrasMap);
+					startActivity(obj.getString("action"), uri, type, packageName, className, extrasMap);
 				}
                 //return new PluginResult(PluginResult.Status.OK);
                 callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.OK));
@@ -174,11 +175,11 @@ public class WebIntent extends CordovaPlugin {
         }
     }
 
-    void startActivity(String action, Uri uri, String type, String classname, Map<String, String> extras) {
+    void startActivity(String action, Uri uri, String type, String packageName, String className, Map<String, String> extras) {
         Intent i = (uri != null ? new Intent(action, uri) : new Intent(action));
 
-        if (classname != null) {
-            i.setClassName(classname);
+        if (packageName != null && className != null ) {
+            i.setClassName(packageName, classname);
         }
         
         if (type != null && uri != null) {
